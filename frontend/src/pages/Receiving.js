@@ -1,7 +1,6 @@
 import {
   useEffect,
-  useState,
-  useCallback
+  useState
 } from "react";
 
 import ReceivingHeader from "../components/receiving/ReceivingHeader";
@@ -27,7 +26,9 @@ function Receiving() {
   const [refreshKey, setRefreshKey] =
     useState(0);
 
+  // ====================================
   // CREATE SHIPMENT
+  // ====================================
 
   const [asn, setAsn] =
     useState("");
@@ -116,22 +117,59 @@ function Receiving() {
             ? data
             : [];
 
-        setShipments(shipmentData);
+        setShipments(
+          shipmentData
+        );
 
         if (
-          shipmentData.length > 0 &&
-          !selectedShipment
+          shipmentData.length > 0
         ) {
 
-          setSelectedShipment(
-            shipmentData[0]
-          );
+          // KEEP CURRENT SELECTED
+          if (selectedShipment) {
+
+            const updatedShipment =
+              shipmentData.find(
+                (item) =>
+                  item.id ===
+                  selectedShipment.id
+              );
+
+            if (updatedShipment) {
+
+              setSelectedShipment(
+                updatedShipment
+              );
+
+            } else {
+
+              setSelectedShipment(
+                shipmentData[0]
+              );
+
+            }
+
+          } else {
+
+            setSelectedShipment(
+              shipmentData[0]
+            );
+
+          }
+
+        } else {
+
+          setSelectedShipment(null);
 
         }
+
+        return shipmentData;
 
       } catch (err) {
 
         console.log(err);
+
+        return [];
 
       }
 
@@ -155,15 +193,22 @@ function Receiving() {
         const data =
           await response.json();
 
-        setDiscrepancies(
+        const discrepancyData =
           Array.isArray(data)
             ? data
-            : []
+            : [];
+
+        setDiscrepancies(
+          discrepancyData
         );
+
+        return discrepancyData;
 
       } catch (err) {
 
         console.log(err);
+
+        return [];
 
       }
 
@@ -175,17 +220,17 @@ function Receiving() {
   // ====================================
 
   const refreshAll =
-    useCallback(() => {
+    async () => {
 
-      fetchShipments();
+      await fetchShipments();
 
-      fetchDiscrepancies();
+      await fetchDiscrepancies();
 
       setRefreshKey(
         prev => prev + 1
       );
 
-    }, []);
+    };
 
 
   // ====================================
@@ -195,8 +240,9 @@ function Receiving() {
   useEffect(() => {
 
     refreshAll();
+    // eslint-disable-next-line
 
-  }, [refreshAll]);
+  }, []);
 
 
   // ====================================
@@ -239,7 +285,7 @@ function Receiving() {
                 supplierName,
 
               total_items:
-                totalItems,
+                Number(totalItems),
 
               dock,
 
@@ -267,7 +313,9 @@ function Receiving() {
 
         setArrivalTime("");
 
-        refreshAll();
+        // REFRESH
+
+        await refreshAll();
 
         alert(
           "Shipment Created"
@@ -318,7 +366,7 @@ function Receiving() {
             body: JSON.stringify({
 
               shipment_id:
-                shipmentId,
+                Number(shipmentId),
 
               issue_type:
                 issueType,
@@ -335,7 +383,9 @@ function Receiving() {
 
         setDescription("");
 
-        refreshAll();
+        // REFRESH
+
+        await refreshAll();
 
         alert(
           "Discrepancy Created"
