@@ -101,7 +101,7 @@ function Receiving() {
 
         const response =
           await fetch(
-            "https://smart-inventory-backend.onrender.coms/api/receiving/shipments"
+            "https://https://smart-inventory-backend-m3wf.onrender.coms/api/receiving/shipments"
           );
 
         const data =
@@ -133,7 +133,7 @@ function Receiving() {
 
         const response =
           await fetch(
-            "https://smart-inventory-backend.onrender.coms/api/receiving/discrepancies"
+            "https://https://smart-inventory-backend-m3wf.onrender.coms/api/receiving/discrepancies"
           );
 
         const data =
@@ -206,7 +206,7 @@ function Receiving() {
         }
 
         await fetch(
-          "https://smart-inventory-backend.onrender.coms/api/receiving/shipments",
+          "https://https://smart-inventory-backend-m3wf.onrender.coms/api/receiving/shipments",
           {
             method: "POST",
 
@@ -290,7 +290,7 @@ function Receiving() {
         }
 
         await fetch(
-          "https://smart-inventory-backend.onrender.coms/api/receiving/discrepancies",
+          "https://https://smart-inventory-backend-m3wf.onrender.coms/api/receiving/discrepancies",
           {
             method: "POST",
 

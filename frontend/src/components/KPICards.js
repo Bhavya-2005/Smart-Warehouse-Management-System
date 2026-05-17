@@ -21,7 +21,7 @@ function KPICards() {
     try {
 
       const res = await axios.get(
-        "https://smart-inventory-backend.onrender.coms/api/products/kpi"
+        "https://https://smart-inventory-backend-m3wf.onrender.coms/api/products/kpi"
       );
 
       setKpi(res.data);

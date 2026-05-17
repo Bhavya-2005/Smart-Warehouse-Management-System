@@ -28,7 +28,7 @@ function Login() {
     try {
 
       const res = await axios.post(
-        "https://smart-inventory-backend.onrender.coms/api/auth/login",
+        "https://https://smart-inventory-backend-m3wf.onrender.coms/api/auth/login",
         {
           email,
           password
