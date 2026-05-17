@@ -6,7 +6,10 @@ const db = require("../config/db");
 
 
 
+// ====================================
 // GET ANALYTICS
+// ====================================
+
 router.get("/", async (req, res) => {
 
   try {
@@ -42,6 +45,18 @@ router.get("/", async (req, res) => {
 
 
 
+    const [inventoryValue] =
+      await db.query(
+        `
+        SELECT
+        SUM(quantity * price)
+        AS inventoryValue
+        FROM products
+        `
+      );
+
+
+
     res.json({
 
       totalProducts:
@@ -52,6 +67,10 @@ router.get("/", async (req, res) => {
 
       totalStock:
         stock[0].totalStock || 0,
+
+      inventoryValue:
+        inventoryValue[0]
+          .inventoryValue || 0,
 
     });
 

@@ -1,11 +1,17 @@
 function ChecklistPanel() {
 
   const tasks = [
+
     "Verify ASN document",
+
     "Inspect packaging condition",
+
     "Scan & count items",
+
     "Resolve discrepancies",
+
     "Update stock levels",
+
   ];
 
   return (
@@ -46,6 +52,7 @@ function ChecklistPanel() {
       </div>
 
     </div>
+
   );
 }
 

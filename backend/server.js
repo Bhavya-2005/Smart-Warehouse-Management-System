@@ -1,27 +1,83 @@
-const express = require('express');
-const cors = require('cors');
-const db = require('./config/db');
-const authRoutes = require("./routes/authRoutes");
-const analyticsRoutes = require("./routes/analyticsRoutes");
-const productRoutes = require('./routes/productRoutes');
-const receivingRoutes = require("./routes/receivingRoutes");
+const express = require("express");
+
+const cors = require("cors");
+
+const productRoutes =
+  require("./routes/productRoutes");
+
+const authRoutes =
+  require("./routes/authRoutes");
+
+const analyticsRoutes =
+  require("./routes/analyticsRoutes");
+
+const receivingRoutes =
+  require("./routes/receivingRoutes");
+
+require("./config/db");
 
 const app = express();
 
+
+
+// ====================================
+// MIDDLEWARE
+// ====================================
+
 app.use(cors());
+
 app.use(express.json());
 
-// ROOT ROUTE
-app.get('/', (req, res) => {
-    res.send("API Running 🚀");
+
+
+// ====================================
+// ROOT
+// ====================================
+
+app.get("/", (req, res) => {
+
+  res.send("API Running 🚀");
+
 });
 
-// PRODUCT ROUTES
-app.use('/api/products', productRoutes);
-app.use("/api/auth", authRoutes);
-app.use("/api/analytics", analyticsRoutes);
-app.use("/api/receiving", receivingRoutes);
+
+
+// ====================================
+// ROUTES
+// ====================================
+
+app.use(
+  "/api/products",
+  productRoutes
+);
+
+app.use(
+  "/api/auth",
+  authRoutes
+);
+
+app.use(
+  "/api/analytics",
+  analyticsRoutes
+);
+
+app.use(
+  "/api/receiving",
+  receivingRoutes
+);
+
+
+
+// ====================================
 // START SERVER
-app.listen(8081, () => {
-    console.log("Server running on port 8081");
+// ====================================
+
+const PORT = 8081;
+
+app.listen(PORT, () => {
+
+  console.log(
+    `Server running on port ${PORT}`
+  );
+
 });
