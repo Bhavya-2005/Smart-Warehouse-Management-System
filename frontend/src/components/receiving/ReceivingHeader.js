@@ -36,7 +36,7 @@ function ReceivingHeader({
         setLoading(true);
 
         await fetch(
-          `http://localhost:8081/api/receiving/close/${shipmentId}`,
+          `https://smart-inventory-backend.onrender.coms/api/receiving/close/${shipmentId}`,
           {
             method: "PUT",
           }
@@ -88,7 +88,7 @@ function ReceivingHeader({
           shipments[0].id;
 
         const response = await fetch(
-          `http://localhost:8081/api/receiving/shipments/${shipmentId}/items`
+          `https://smart-inventory-backend.onrender.coms/api/receiving/shipments/${shipmentId}/items`
         );
 
         const items =
@@ -249,7 +249,7 @@ function ReceivingHeader({
           shipments[0];
 
         const response = await fetch(
-          `http://localhost:8081/api/receiving/shipments/${shipment.id}/items`
+          `https://smart-inventory-backend.onrender.coms/api/receiving/shipments/${shipment.id}/items`
         );
 
         const items =

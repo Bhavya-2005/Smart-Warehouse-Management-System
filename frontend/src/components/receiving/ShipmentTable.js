@@ -54,7 +54,7 @@ function ShipmentTable({
 
         const response =
           await fetch(
-            `http://localhost:8081/api/receiving/shipments/${shipmentId}/items`
+            `https://smart-inventory-backend.onrender.coms/api/receiving/shipments/${shipmentId}/items`
           );
 
         const data =
@@ -128,7 +128,7 @@ function ShipmentTable({
         setLoading(true);
 
         await fetch(
-          "http://localhost:8081/api/receiving/add-item",
+          "https://smart-inventory-backend.onrender.coms/api/receiving/add-item",
           {
             method: "POST",
 
@@ -240,7 +240,7 @@ function ShipmentTable({
         setLoading(true);
 
         await fetch(
-          `http://localhost:8081/api/receiving/receive-item/${item.id}`,
+          `https://smart-inventory-backend.onrender.coms/api/receiving/receive-item/${item.id}`,
           {
             method: "PUT",
 
@@ -304,7 +304,7 @@ function ShipmentTable({
       try {
 
         await fetch(
-          `http://localhost:8081/api/receiving/item/${id}`,
+          `https://smart-inventory-backend.onrender.coms/api/receiving/item/${id}`,
           {
             method: "DELETE",
           }

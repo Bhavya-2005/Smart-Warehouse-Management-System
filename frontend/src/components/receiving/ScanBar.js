@@ -26,7 +26,7 @@ function ScanBar({
 
 
       const response = await fetch(
-        "http://localhost:8081/api/receiving/scan",
+        "https://smart-inventory-backend.onrender.coms/api/receiving/scan",
         {
           method: "POST",
 

@@ -10,7 +10,7 @@ function ProductsTable() {
     try {
 
       const res = await axios.get(
-        "http://localhost:8081/api/products/all"
+        "https://smart-inventory-backend.onrender.coms/api/products/all"
       );
 
       setProducts(res.data);
@@ -34,7 +34,7 @@ function ProductsTable() {
     try {
 
       await axios.delete(
-        `http://localhost:8081/api/products/delete/${id}`
+        `https://smart-inventory-backend.onrender.coms/api/products/delete/${id}`
       );
 
       fetchProducts();

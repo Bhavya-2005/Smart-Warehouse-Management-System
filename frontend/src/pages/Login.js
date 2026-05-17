@@ -28,7 +28,7 @@ function Login() {
     try {
 
       const res = await axios.post(
-        "http://localhost:8081/api/auth/login",
+        "https://smart-inventory-backend.onrender.coms/api/auth/login",
         {
           email,
           password

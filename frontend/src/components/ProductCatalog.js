@@ -39,7 +39,7 @@ function ProductCatalog() {
     try {
 
       const res = await axios.get(
-        "http://localhost:8081/api/products/all"
+        "https://smart-inventory-backend.onrender.coms/api/products/all"
       );
 
       setProducts(res.data);
@@ -90,7 +90,7 @@ function ProductCatalog() {
     try {
 
       await axios.post(
-        "http://localhost:8081/api/products/add",
+        "https://smart-inventory-backend.onrender.coms/api/products/add",
         formData
       );
 
@@ -120,7 +120,7 @@ function ProductCatalog() {
     try {
 
       await axios.delete(
-        `http://localhost:8081/api/products/delete/${id}`
+        `https://smart-inventory-backend.onrender.coms/api/products/delete/${id}`
       );
 
       fetchProducts();
@@ -156,7 +156,7 @@ function ProductCatalog() {
     try {
 
       await axios.put(
-        `http://localhost:8081/api/products/update/${editingId}`,
+        `https://smart-inventory-backend.onrender.coms/api/products/update/${editingId}`,
         formData
       );
 

@@ -10,7 +10,7 @@ function Alerts() {
     try {
 
       const res = await axios.get(
-        "http://localhost:8081/api/products/low-stock"
+        "https://smart-inventory-backend.onrender.coms/api/products/low-stock"
       );
 
       setAlerts(res.data);

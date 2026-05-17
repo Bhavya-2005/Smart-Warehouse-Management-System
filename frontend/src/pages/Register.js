@@ -36,7 +36,7 @@ function Register() {
     try {
 
       const res = await axios.post(
-        "http://localhost:8081/api/auth/register",
+        "https://smart-inventory-backend.onrender.coms/api/auth/register",
         formData
       );
 

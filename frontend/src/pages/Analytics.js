@@ -61,7 +61,7 @@ function Analytics() {
     try {
 
       const res = await axios.get(
-        "http://localhost:8081/api/analytics/stock-vs-sold"
+        "https://smart-inventory-backend.onrender.coms/api/analytics/stock-vs-sold"
       );
 
       setChartData(res.data);
