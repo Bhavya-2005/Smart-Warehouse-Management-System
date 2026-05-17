@@ -56,7 +56,6 @@ function Receiving() {
     setArrivalTime
   ] = useState("");
 
-
   // ====================================
   // DISCREPANCIES
   // ====================================
@@ -81,7 +80,6 @@ function Receiving() {
     setDescription
   ] = useState("");
 
-
   // ====================================
   // BARCODE
   // ====================================
@@ -93,7 +91,6 @@ function Receiving() {
 
   const [barcode, setBarcode] =
     useState("");
-
 
   // ====================================
   // FETCH SHIPMENTS
@@ -125,7 +122,6 @@ function Receiving() {
           shipmentData.length > 0
         ) {
 
-          // KEEP CURRENT SELECTED
           if (selectedShipment) {
 
             const updatedShipment =
@@ -175,7 +171,6 @@ function Receiving() {
 
     };
 
-
   // ====================================
   // FETCH DISCREPANCIES
   // ====================================
@@ -214,7 +209,6 @@ function Receiving() {
 
     };
 
-
   // ====================================
   // REFRESH ALL
   // ====================================
@@ -232,18 +226,21 @@ function Receiving() {
 
     };
 
-
   // ====================================
   // INITIAL LOAD
   // ====================================
 
   useEffect(() => {
 
-    refreshAll();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const loadData = async () => {
+
+      await refreshAll();
+
+    };
+
+    loadData();
 
   }, []);
-
 
   // ====================================
   // CREATE SHIPMENT
@@ -299,21 +296,12 @@ function Receiving() {
           }
         );
 
-        // CLEAR FORM
-
         setAsn("");
-
         setSupplierName("");
-
         setTotalItems("");
-
         setDock("");
-
         setStoreNumber("");
-
         setArrivalTime("");
-
-        // REFRESH
 
         await refreshAll();
 
@@ -328,7 +316,6 @@ function Receiving() {
       }
 
     };
-
 
   // ====================================
   // CREATE DISCREPANCY
@@ -378,12 +365,8 @@ function Receiving() {
         );
 
         setShipmentId("");
-
         setIssueType("");
-
         setDescription("");
-
-        // REFRESH
 
         await refreshAll();
 
@@ -399,7 +382,6 @@ function Receiving() {
 
     };
 
-
   return (
 
     <div className="
@@ -414,7 +396,6 @@ function Receiving() {
         shipments={shipments}
         refreshShipments={refreshAll}
       />
-
 
       {/* CREATE SHIPMENT */}
 
@@ -454,7 +435,6 @@ function Receiving() {
           </button>
 
         </div>
-
 
         <div className="
           grid
@@ -563,7 +543,6 @@ function Receiving() {
 
       </div>
 
-
       {/* KPI */}
 
       <ReceivingKPIs
@@ -571,21 +550,15 @@ function Receiving() {
         discrepancies={discrepancies}
       />
 
-
       {/* SCANNER */}
 
       <ScanBar
-
         barcode={barcode}
         setBarcode={setBarcode}
-
         lookupResult={lookupResult}
         setLookupResult={setLookupResult}
-
         refreshData={refreshAll}
-
       />
-
 
       {/* MAIN */}
 
@@ -604,19 +577,14 @@ function Receiving() {
         ">
 
           <ShipmentQueue
-
             shipments={shipments}
-
             selectedShipment={selectedShipment}
-
             setSelectedShipment={
               setSelectedShipment
             }
-
           />
 
         </div>
-
 
         {/* RIGHT PANEL */}
 
