@@ -240,7 +240,7 @@ function Receiving() {
   useEffect(() => {
 
     refreshAll();
-    // eslint-disable-next-line
+    // eslint-disable-next-line react-hooks/exhaustive-deps
 
   }, []);
 
