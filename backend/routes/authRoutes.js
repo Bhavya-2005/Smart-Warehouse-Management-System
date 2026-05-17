@@ -5,39 +5,32 @@ const router = express.Router();
 const db = require("../config/db");
 
 
-
-// ====================================
 // REGISTER
-// ====================================
-
 router.post("/register", async (req, res) => {
 
   try {
 
     const {
-
       name,
       email,
       password
-
     } = req.body;
 
 
-
-    // CHECK EXISTING USER
-    const [existingUsers] =
+    const existingUser =
       await db.query(
         `
         SELECT *
         FROM users
-        WHERE email=?
+        WHERE email=$1
         `,
         [email]
       );
 
 
-
-    if (existingUsers.length > 0) {
+    if (
+      existingUser.rows.length > 0
+    ) {
 
       return res.status(400).json({
         message: "User already exists"
@@ -46,8 +39,6 @@ router.post("/register", async (req, res) => {
     }
 
 
-
-    // INSERT USER
     await db.query(
       `
       INSERT INTO users
@@ -56,7 +47,7 @@ router.post("/register", async (req, res) => {
         email,
         password
       )
-      VALUES (?, ?, ?)
+      VALUES ($1, $2, $3)
       `,
       [
         name,
@@ -64,7 +55,6 @@ router.post("/register", async (req, res) => {
         password
       ]
     );
-
 
 
     res.json({
@@ -83,30 +73,24 @@ router.post("/register", async (req, res) => {
 });
 
 
-
-// ====================================
 // LOGIN
-// ====================================
-
 router.post("/login", async (req, res) => {
 
   try {
 
     const {
-
       email,
       password
-
     } = req.body;
 
 
-
-    const [rows] =
+    const result =
       await db.query(
         `
         SELECT *
         FROM users
-        WHERE email=? AND password=?
+        WHERE email=$1
+        AND password=$2
         `,
         [
           email,
@@ -115,8 +99,9 @@ router.post("/login", async (req, res) => {
       );
 
 
-
-    if (rows.length === 0) {
+    if (
+      result.rows.length === 0
+    ) {
 
       return res.status(401).json({
         message: "Invalid Credentials"
@@ -125,10 +110,9 @@ router.post("/login", async (req, res) => {
     }
 
 
-
     res.json({
       success: true,
-      user: rows[0]
+      user: result.rows[0]
     });
 
   } catch (err) {
@@ -140,7 +124,5 @@ router.post("/login", async (req, res) => {
   }
 
 });
-
-
 
 module.exports = router;
