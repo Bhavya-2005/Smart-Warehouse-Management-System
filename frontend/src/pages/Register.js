@@ -26,17 +26,23 @@ function Register() {
 
   const handleRegister = async () => {
 
-    if (!formData.password) {
+    if (
+      !formData.full_name ||
+      !formData.email ||
+      !formData.password ||
+      !formData.role
+    ) {
 
-      alert("Password is required");
+      alert("Please fill all fields");
 
       return;
+
     }
 
     try {
 
       const res = await axios.post(
-        "https://https://smart-inventory-backend-m3wf.onrender.coms/api/auth/register",
+        "https://smart-inventory-backend-m3wf.onrender.com/api/auth/register",
         formData
       );
 
@@ -133,13 +139,7 @@ function Register() {
                 name="full_name"
                 value={formData.full_name}
                 onChange={handleChange}
-                placeholder="First Name"
-                className="h-20 rounded-2xl bg-gray-900 text-white px-8 text-2xl"
-              />
-
-              <input
-                type="text"
-                placeholder="Last Name"
+                placeholder="Full Name"
                 className="h-20 rounded-2xl bg-gray-900 text-white px-8 text-2xl"
               />
 
@@ -149,12 +149,6 @@ function Register() {
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="Work Email"
-                className="h-20 rounded-2xl bg-gray-900 text-white px-8 text-2xl"
-              />
-
-              <input
-                type="text"
-                placeholder="Employee ID"
                 className="h-20 rounded-2xl bg-gray-900 text-white px-8 text-2xl"
               />
 
@@ -171,6 +165,7 @@ function Register() {
                   alert("Please fill all required fields");
 
                   return;
+
                 }
 
                 setStep(2);
@@ -196,7 +191,7 @@ function Register() {
               Role & Assignment
             </h2>
 
-            <div className="grid grid-cols-3 gap-8 mt-10">
+            <div className="grid grid-cols-1 gap-8 mt-10">
 
               <select
                 name="role"
@@ -221,20 +216,6 @@ function Register() {
 
               </select>
 
-              <input
-                type="text"
-                placeholder="Warehouse ID"
-                className="h-20 rounded-2xl bg-gray-900 text-white px-8 text-2xl"
-              />
-
-              <select className="h-20 rounded-2xl bg-gray-900 text-white px-6 text-xl">
-
-                <option>Inventory</option>
-                <option>Supply Chain</option>
-                <option>Operations</option>
-
-              </select>
-
             </div>
 
             <div className="flex gap-6 mt-16">
@@ -256,6 +237,7 @@ function Register() {
                     alert("Please select role");
 
                     return;
+
                   }
 
                   setStep(3);
@@ -283,7 +265,7 @@ function Register() {
               Security Setup
             </h2>
 
-            <div className="grid grid-cols-2 gap-8 mt-10">
+            <div className="grid grid-cols-1 gap-8 mt-10">
 
               <input
                 type="password"
@@ -291,12 +273,6 @@ function Register() {
                 value={formData.password}
                 onChange={handleChange}
                 placeholder="Create Password"
-                className="h-20 rounded-2xl bg-gray-900 text-white px-8 text-2xl"
-              />
-
-              <input
-                type="password"
-                placeholder="Confirm Password"
                 className="h-20 rounded-2xl bg-gray-900 text-white px-8 text-2xl"
               />
 

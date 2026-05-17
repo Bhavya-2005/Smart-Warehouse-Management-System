@@ -23,12 +23,13 @@ function Login() {
       alert("Please enter email and password");
 
       return;
+
     }
 
     try {
 
       const res = await axios.post(
-        "https://https://smart-inventory-backend-m3wf.onrender.coms/api/auth/login",
+        "https://smart-inventory-backend-m3wf.onrender.com/api/auth/login",
         {
           email,
           password
