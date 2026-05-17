@@ -10,6 +10,7 @@ import ScanBar from "../components/receiving/ScanBar";
 import ShipmentTable from "../components/receiving/ShipmentTable";
 import ChecklistPanel from "../components/receiving/ChecklistPanel";
 import DiscrepancyPanel from "../components/receiving/DiscrepancyPanel";
+import ShipmentQueue from "../components/receiving/ShipmentQueue";
 
 function Receiving() {
 
@@ -19,6 +20,9 @@ function Receiving() {
 
   const [shipments, setShipments] =
     useState([]);
+
+  const [selectedShipment, setSelectedShipment] =
+    useState(null);
 
   const [refreshKey, setRefreshKey] =
     useState(0);
@@ -101,17 +105,29 @@ function Receiving() {
 
         const response =
           await fetch(
-            "https://https://smart-inventory-backend-m3wf.onrender.coms/api/receiving/shipments"
+            "https://smart-inventory-backend-m3wf.onrender.com/api/receiving/shipments"
           );
 
         const data =
           await response.json();
 
-        setShipments(
+        const shipmentData =
           Array.isArray(data)
             ? data
-            : []
-        );
+            : [];
+
+        setShipments(shipmentData);
+
+        if (
+          shipmentData.length > 0 &&
+          !selectedShipment
+        ) {
+
+          setSelectedShipment(
+            shipmentData[0]
+          );
+
+        }
 
       } catch (err) {
 
@@ -133,7 +149,7 @@ function Receiving() {
 
         const response =
           await fetch(
-            "https://https://smart-inventory-backend-m3wf.onrender.coms/api/receiving/discrepancies"
+            "https://smart-inventory-backend-m3wf.onrender.com/api/receiving/discrepancies"
           );
 
         const data =
@@ -206,7 +222,7 @@ function Receiving() {
         }
 
         await fetch(
-          "https://https://smart-inventory-backend-m3wf.onrender.coms/api/receiving/shipments",
+          "https://smart-inventory-backend-m3wf.onrender.com/api/receiving/shipments",
           {
             method: "POST",
 
@@ -290,7 +306,7 @@ function Receiving() {
         }
 
         await fetch(
-          "https://https://smart-inventory-backend-m3wf.onrender.coms/api/receiving/discrepancies",
+          "https://smart-inventory-backend-m3wf.onrender.com/api/receiving/discrepancies",
           {
             method: "POST",
 
@@ -526,20 +542,46 @@ function Receiving() {
       <div className="
         grid
         grid-cols-1
-        xl:grid-cols-3
+        xl:grid-cols-4
         gap-6
         mt-6
       ">
 
-        {/* TABLE */}
+        {/* LEFT PANEL */}
 
         <div className="
-          xl:col-span-2
+          xl:col-span-1
+        ">
+
+          <ShipmentQueue
+
+            shipments={shipments}
+
+            selectedShipment={selectedShipment}
+
+            setSelectedShipment={
+              setSelectedShipment
+            }
+
+          />
+
+        </div>
+
+
+        {/* RIGHT PANEL */}
+
+        <div className="
+          xl:col-span-3
+          space-y-6
         ">
 
           <ShipmentTable
 
-            shipments={shipments}
+            shipments={
+              selectedShipment
+                ? [selectedShipment]
+                : []
+            }
 
             refreshKey={refreshKey}
 
@@ -547,35 +589,35 @@ function Receiving() {
 
           />
 
-        </div>
+          <div className="
+            grid
+            grid-cols-1
+            xl:grid-cols-2
+            gap-6
+          ">
 
+            <ChecklistPanel />
 
-        {/* SIDE */}
+            <DiscrepancyPanel
 
-        <div className="
-          space-y-6
-        ">
+              discrepancies={discrepancies}
 
-          <ChecklistPanel />
+              shipmentId={shipmentId}
+              setShipmentId={setShipmentId}
 
-          <DiscrepancyPanel
+              issueType={issueType}
+              setIssueType={setIssueType}
 
-            discrepancies={discrepancies}
+              description={description}
+              setDescription={setDescription}
 
-            shipmentId={shipmentId}
-            setShipmentId={setShipmentId}
+              createDiscrepancy={
+                createDiscrepancy
+              }
 
-            issueType={issueType}
-            setIssueType={setIssueType}
+            />
 
-            description={description}
-            setDescription={setDescription}
-
-            createDiscrepancy={
-              createDiscrepancy
-            }
-
-          />
+          </div>
 
         </div>
 
