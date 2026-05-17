@@ -1,4 +1,8 @@
-import { useEffect, useState } from "react";
+import {
+  useEffect,
+  useState,
+  useCallback
+} from "react";
 
 import ReceivingHeader from "../components/receiving/ReceivingHeader";
 import ReceivingKPIs from "../components/receiving/ReceivingKPIs";
@@ -87,36 +91,6 @@ function Receiving() {
 
 
   // ====================================
-  // REFRESH ALL
-  // ====================================
-
-  const refreshAll = () => {
-
-    fetchShipments();
-
-    fetchDiscrepancies();
-
-    setRefreshKey(
-      prev => prev + 1
-    );
-
-  };
-
-
-  // ====================================
-  // INITIAL LOAD
-  // ====================================
-
-  useEffect(() => {
-
-    refreshAll();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-
-  }, []);
-
-
-  // ====================================
   // FETCH SHIPMENTS
   // ====================================
 
@@ -146,6 +120,67 @@ function Receiving() {
       }
 
     };
+
+
+  // ====================================
+  // FETCH DISCREPANCIES
+  // ====================================
+
+  const fetchDiscrepancies =
+    async () => {
+
+      try {
+
+        const response =
+          await fetch(
+            "http://localhost:8081/api/receiving/discrepancies"
+          );
+
+        const data =
+          await response.json();
+
+        setDiscrepancies(
+          Array.isArray(data)
+            ? data
+            : []
+        );
+
+      } catch (err) {
+
+        console.log(err);
+
+      }
+
+    };
+
+
+  // ====================================
+  // REFRESH ALL
+  // ====================================
+
+  const refreshAll =
+    useCallback(() => {
+
+      fetchShipments();
+
+      fetchDiscrepancies();
+
+      setRefreshKey(
+        prev => prev + 1
+      );
+
+    }, []);
+
+
+  // ====================================
+  // INITIAL LOAD
+  // ====================================
+
+  useEffect(() => {
+
+    refreshAll();
+
+  }, [refreshAll]);
 
 
   // ====================================
@@ -220,38 +255,6 @@ function Receiving() {
 
         alert(
           "Shipment Created"
-        );
-
-      } catch (err) {
-
-        console.log(err);
-
-      }
-
-    };
-
-
-  // ====================================
-  // FETCH DISCREPANCIES
-  // ====================================
-
-  const fetchDiscrepancies =
-    async () => {
-
-      try {
-
-        const response =
-          await fetch(
-            "http://localhost:8081/api/receiving/discrepancies"
-          );
-
-        const data =
-          await response.json();
-
-        setDiscrepancies(
-          Array.isArray(data)
-            ? data
-            : []
         );
 
       } catch (err) {
@@ -347,9 +350,7 @@ function Receiving() {
       />
 
 
-      {/* ==================================== */}
       {/* CREATE SHIPMENT */}
-      {/* ==================================== */}
 
       <div className="
         bg-white
